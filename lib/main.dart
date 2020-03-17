@@ -1,4 +1,4 @@
-import 'package:coronatracker/pages/home.dart';
+import 'package:coronatracker/ui/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());

@@ -14,7 +14,7 @@ description: An application to track the corona cases worldwide.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -31,6 +31,8 @@ dependencies:
   flutter_bloc:
   font_awesome_flutter: ^8.7.0
   flutter_emoji: ">= 2.0.0"
+  flutter_screen_scaler:
+  animated_text_kit: ^2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,7 +1,9 @@
 import 'package:coronatracker/bloc/global/global_bloc.dart';
+import 'package:coronatracker/ui/widgets/slide_fade_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:flutter_screen_scaler/flutter_screen_scaler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GlobalPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class GlobalPage extends StatefulWidget {
 class _GlobalPageState extends State<GlobalPage> {
   final GlobalBloc _globalBloc = GlobalBloc();
   var parser = EmojiParser();
+  static ScreenScaler _scaler;
 
   @override
   void initState() {
@@ -21,20 +24,24 @@ class _GlobalPageState extends State<GlobalPage> {
 
   @override
   Widget build(BuildContext context) {
+    _scaler = ScreenScaler()..init(context);
+
     return Column(
       children: <Widget>[
         Container(
-          padding: EdgeInsets.all(32.0),
-          height: 300,
+          padding: _scaler.getPaddingAll(13),
+          height: _scaler.getHeight(28),
           width: double.infinity,
           color: Colors.deepPurple,
           alignment: Alignment.bottomLeft,
-          child: Text(
-            "Coronavirus\nTracker",
-            style: TextStyle(
-                fontSize: 40,
-                color: Colors.white,
-                height: 1
+          child: SlideFadeTransition(
+            child: Text(
+              "Coronavirus\nTracker",
+              style: TextStyle(
+                  fontSize: _scaler.getTextSize(17),
+                  color: Colors.white,
+                  height: 1
+              ),
             ),
           ),
         ),
@@ -82,8 +89,6 @@ class _GlobalPageState extends State<GlobalPage> {
                       tagline: "global recovery",
                       color: Colors.green,
                     ),
-                    Spacer(),
-//                    Text(parser.getEmoji("🇨🇳").toString()),
                   ],
                 );
               }
@@ -104,15 +109,19 @@ class _GlobalPageState extends State<GlobalPage> {
 }
 
 class Spacer extends StatelessWidget {
+  static ScreenScaler _scaler;
+
   const Spacer({
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    _scaler = ScreenScaler()..init(context);
+
     return Divider(
       color: Colors.transparent,
-      height: 25,
+      height: _scaler.getHeight(1.5),
     );
   }
 }
@@ -121,6 +130,7 @@ class InformationCard extends StatelessWidget {
   final int count;
   final String tagline;
   final Color color;
+  static ScreenScaler _scaler;
 
   const InformationCard({
     this.count,
@@ -133,6 +143,8 @@ class InformationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _scaler = ScreenScaler()..init(context);
+
     return Container(
       padding: EdgeInsets.all(16.0),
       width: double.infinity,
@@ -141,21 +153,28 @@ class InformationCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.fromLTRB(4, 8, 8, 2),
-            child: Text(
-              count.toString().replaceAllMapped(reg, mathFunc),
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 32.0,
+            child: SlideFadeTransition(
+              delayStart: Duration(milliseconds: 50),
+              child: Text(
+                count.toString().replaceAllMapped(reg, mathFunc),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: _scaler.getTextSize(15),
+                ),
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 2, 8, 8),
-            child: Text(
-              "${tagline.toUpperCase()}",
-              style: TextStyle(
-                letterSpacing: 4.0,
-                color: color,
+            child: SlideFadeTransition(
+              delayStart: Duration(milliseconds: 100),
+              child: Text(
+                "${tagline.toUpperCase()}",
+                style: TextStyle(
+                  letterSpacing: 4.0,
+                  color: color,
+                  fontSize: _scaler.getTextSize(9.5),
+                ),
               ),
             ),
           ),

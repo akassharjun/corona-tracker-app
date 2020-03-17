@@ -61,6 +61,30 @@ class CountryData {
   }
 }
 
+//class NewsList {
+//  List<CountryData> data;
+//
+//  NewsList({
+//    this.data,
+//  });
+//
+//  factory NewsList.fromJson(String str) => NewsList.fromMap(json.decode(str));
+//
+//  String toJson() => json.encode(toMap());
+//
+//  factory NewsList.fromMap(Map<String, dynamic> json) => NewsList(
+//    data: json["news"] == null
+//        ? null
+//        : List<CountryData>.from(json["news"].map((x) => CountryData.fromMap(x))),
+//  );
+//
+//  Map<String, dynamic> toMap() => {
+//    "news": data == null
+//        ? null
+//        : List<dynamic>.from(data.map((x) => x.toMap())),
+//  };
+//}
+
 List<Map<String, String>> countryCodesList = [
   {"name": "Afghanistan", "code": "AF"},
   {"name": "Åland Islands", "code": "AX"},
