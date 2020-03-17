@@ -8,17 +8,14 @@ abstract class Api {
 class NetworkService extends Api {
   @override
   Future<GlobalData> getGlobalData() async {
-    final String _endpoint =
-        "https://corona.lmao.ninja/all";
-    final Dio _dio = Dio();
+//    final String _endpoint =
+//        "https://coronavirus-19-api.herokuapp.com/all";
+//    final Dio _dio = Dio();
+//
+//    Response response = await _dio.get(_endpoint);
 
-    Response response = await _dio.get(_endpoint);
+//    return GlobalData.fromMap(response.data);
 
-    print(await _dio.get(_endpoint));
-    print(_dio.get(_endpoint));
-    print("Not working");
-    print(response);
-
-    return GlobalData.fromMap(response.data);
+    return GlobalData(cases: 223342, deaths: 5432, recovered: 122432);
   }
 }

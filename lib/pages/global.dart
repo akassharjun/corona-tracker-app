@@ -1,6 +1,8 @@
 import 'package:coronatracker/bloc/global/global_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class GlobalPage extends StatefulWidget {
   @override
@@ -9,7 +11,8 @@ class GlobalPage extends StatefulWidget {
 
 class _GlobalPageState extends State<GlobalPage> {
   final GlobalBloc _globalBloc = GlobalBloc();
-  
+  var parser = EmojiParser();
+
   @override
   void initState() {
     _globalBloc.add(FetchGlobalData());
@@ -18,57 +21,78 @@ class _GlobalPageState extends State<GlobalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: BlocBuilder(
-        bloc: _globalBloc,
-        builder: (BuildContext context, GlobalState state) {
-          if (state is InitialGlobalState){
-            return Center(
-              child: CircularProgressIndicator(),
-            );          }
+    return Column(
+      children: <Widget>[
+        Container(
+          padding: EdgeInsets.all(32.0),
+          height: 300,
+          width: double.infinity,
+          color: Colors.deepPurple,
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            "Coronavirus\nTracker",
+            style: TextStyle(
+                fontSize: 40,
+                color: Colors.white,
+                height: 1
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: BlocBuilder(
+            bloc: _globalBloc,
+            builder: (BuildContext context, GlobalState state) {
+              if (state is InitialGlobalState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-          if (state is NetworkBusyGlobalState) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+              if (state is NetworkBusyGlobalState) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-          if (state is NetworkErrorGlobalState) {
-            return Center(
-              child: Text("There was an error fetching the data"),
-            );
-          }
+              if (state is NetworkErrorGlobalState) {
+                return Center(
+                  child: Text("There was an error fetching the data"),
+                );
+              }
 
-          if (state is DataFetchedGlobalState) {
-            return Column(
-              children: <Widget>[
-                Spacer(),
-                InformationCard(
-                  count: state.globalData.cases,
-                  tagline: "global corona cases",
-                  color: Colors.deepPurple,
-                ),
-                Spacer(),
-                InformationCard(
-                  count: state.globalData.deaths,
-                  tagline: "global deaths",
-                  color: Colors.redAccent,
-                ),
-                Spacer(),
-                InformationCard(
-                  count: state.globalData.recovered,
-                  tagline: "global recovery",
-                  color: Colors.green,
-                ),
-                Spacer(),
-              ],
-            );
-          }
+              if (state is DataFetchedGlobalState) {
+                return Column(
+                  children: <Widget>[
+                    Spacer(),
+                    InformationCard(
+                      count: state.globalData.cases,
+                      tagline: "global corona cases",
+                      color: Colors.deepPurple,
+                    ),
+                    Spacer(),
+                    InformationCard(
+                      count: state.globalData.deaths,
+                      tagline: "global deaths",
+                      color: Colors.redAccent,
+                    ),
+                    Spacer(),
+                    InformationCard(
+                      count: state.globalData.recovered,
+                      tagline: "global recovery",
+                      color: Colors.green,
+                    ),
+                    Spacer(),
+//                    Text(parser.getEmoji("🇨🇳").toString()),
+                  ],
+                );
+              }
 
-          return Container();
-        },
-      ),
+              return Container();
+            },
+          ),
+        )
+      ],
     );
   }
 
